@@ -18,6 +18,7 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { MemberCardsComponent } from './members/member-cards/member-cards.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -32,7 +33,8 @@ export function tokenGetter() {
       MemberListComponent,
       ListsComponent,
       MessagesComponent,
-      MemberCardsComponent
+      MemberCardsComponent,
+      MemberDetailComponent
    ],
    imports: [
       BrowserModule,
