@@ -10,7 +10,7 @@ import { AlertyfiService } from '../../services/alertyfi.service';
 })
 export class MemberListComponent implements OnInit {
   users: User[];
-  
+
   constructor(private userService: UserService, private alertify: AlertyfiService) { }
 
   ngOnInit() {
