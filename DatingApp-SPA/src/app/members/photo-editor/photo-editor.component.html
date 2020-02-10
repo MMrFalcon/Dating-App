@@ -9,7 +9,9 @@
     (click)="setMainPhoto(photo)" 
     [disabled]="photo.isMain">Main</button>
     
-    <button type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-trash-o"></i></button>
+    <button type="button" class="btn btn-sm btn-danger ml-1" 
+    [disabled]="photo.isMain"
+    (click)="deletePhoto(photo.id)"><i class="fa fa-trash-o"></i></button>
   </div>
   </div>
 </div>
