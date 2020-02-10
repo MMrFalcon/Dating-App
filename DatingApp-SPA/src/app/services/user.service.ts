@@ -9,20 +9,24 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class UserService {
-baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl;
 
-constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-getUsers(): Observable<User[]> {
-  return this.http.get<User[]>(this.baseUrl + 'users/');
-}
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'users/');
+  }
 
-getUser(id: number): Observable<User> {
-  return this.http.get<User>(this.baseUrl + 'users/' + id);
-}
+  getUser(id: number): Observable<User> {
+    return this.http.get<User>(this.baseUrl + 'users/' + id);
+  }
 
-updateUser(id: number, user: User) {
-  return this.http.put(this.baseUrl + 'users/' + id , user);
-}
+  updateUser(id: number, user: User) {
+    return this.http.put(this.baseUrl + 'users/' + id , user);
+  }
+
+  setMainPhoto(userId: number, photoId: number) {
+    return this.http.post(this.baseUrl + 'users/' + userId + '/photos/' + photoId + '/setMain', {});
+  }
 
 }
