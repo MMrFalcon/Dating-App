@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { AlertyfiService } from '../services/alertyfi.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { BsDatepickerConfig } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,8 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   model: any = {};
-  registerFrom: FormGroup;
+  registerForm: FormGroup;
+  bsConfig: Partial<BsDatepickerConfig>;
 
   constructor(
     private authSerivce: AuthService,
@@ -20,6 +22,9 @@ export class RegisterComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.bsConfig = {
+      containerClass: 'theme-red'
+    },
     this.createRegisterForm();
   }
 
@@ -28,8 +33,13 @@ export class RegisterComponent implements OnInit {
   }
 
   createRegisterForm() {
-    this.registerFrom = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
+      gender: ['male'],
       username: ['', Validators.required],
+      knownAs: ['', Validators.required],
+      dateOfBirth: [null, Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]],
       confirmPassword: ['', Validators.required]
     }, {validator: this.passwordMatchValidator});
@@ -41,7 +51,7 @@ export class RegisterComponent implements OnInit {
     // }, error => {
     //   this.alertify.error(error);
     // });
-    console.log(this.registerFrom.value);
+    console.log(this.registerForm.value);
   }
 
   cancel() {
