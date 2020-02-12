@@ -8,7 +8,6 @@ import { User } from 'src/app/models/user';
 })
 export class MemberCardsComponent implements OnInit {
   @Input() user: User;
-  
   constructor() { }
 
   ngOnInit() {
