@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -37,6 +38,24 @@ namespace DatingApp.API.Controllers
                 return NotFound();
 
             return Ok(messageFromRepo);           
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMessagesForUser(int userId, [FromQuery] MessageParams messageParams)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();  
+
+
+            messageParams.UserId = userId;
+            var messagesFromRepo = await datingRepository.GetMessagesForUser(messageParams);
+
+            var messages = mapper.Map<IEnumerable<MessageToReturnDto>>(messagesFromRepo);
+
+            Response.AddPagination(messagesFromRepo.CurrentPage, messagesFromRepo.PageSize, 
+            messagesFromRepo.TotalCount, messagesFromRepo.TotalPages);
+
+            return Ok(messages);
         }
 
         [HttpPost]
