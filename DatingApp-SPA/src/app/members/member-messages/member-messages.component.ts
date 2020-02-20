@@ -12,6 +12,7 @@ import { AlertyfiService } from 'src/app/services/alertyfi.service';
 export class MemberMessagesComponent implements OnInit {
   @Input() recipientId: number;
   messages: Message[];
+  newMessage: any = {};
 
   constructor(
     private userService: UserService,
@@ -26,6 +27,16 @@ export class MemberMessagesComponent implements OnInit {
   loadMessages() {
     this.userService.getMessageThread(this.authService.decodedToken.nameid, this.recipientId).subscribe(messages => {
       this.messages = messages;
+    }, errorResponse => {
+      this.alertifyService.error(errorResponse);
+    });
+  }
+
+  sendMessage() {
+    this.newMessage.recipientId = this.recipientId;
+    this.userService.sendMessage(this.authService.decodedToken.nameid, this.newMessage).subscribe((message: Message) => {
+      this.messages.unshift(message);
+      this.newMessage = '';
     }, errorResponse => {
       this.alertifyService.error(errorResponse);
     });
