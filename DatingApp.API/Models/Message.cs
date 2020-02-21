@@ -24,7 +24,7 @@ namespace DatingApp.API.Models
 
         public bool SenderDeleted { get; set; }
 
-        public bool RecipientDelted { get; set; }
+        public bool RecipientDeleted { get; set; }
 
         
     }

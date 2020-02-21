@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DatingApp.API.Migrations
 {
-    public partial class MessageEntityCreation : Migration
+    public partial class AddingMessageTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,7 +20,7 @@ namespace DatingApp.API.Migrations
                     DateRead = table.Column<DateTime>(nullable: true),
                     MessageSent = table.Column<DateTime>(nullable: false),
                     SenderDeleted = table.Column<bool>(nullable: false),
-                    RecipientDelted = table.Column<bool>(nullable: false)
+                    RecipientDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

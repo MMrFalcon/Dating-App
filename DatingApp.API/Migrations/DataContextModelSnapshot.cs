@@ -49,7 +49,7 @@ namespace DatingApp.API.Migrations
                     b.Property<DateTime>("MessageSent")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("RecipientDelted")
+                    b.Property<bool>("RecipientDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("RecipientId")

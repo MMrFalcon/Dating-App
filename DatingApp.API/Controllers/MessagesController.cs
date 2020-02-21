@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -98,6 +99,29 @@ namespace DatingApp.API.Controllers
 
             return BadRequest("Could not send Message");
                          
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> DeleteMessage(int id, int userId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();  
+
+            var messageFromRepo = await datingRepository.GetMessage(id);
+
+            if (messageFromRepo.SenderId == userId)
+                messageFromRepo.SenderDeleted = true;
+            
+            if (messageFromRepo.RecipientId == userId)
+                messageFromRepo.RecipientDeleted = true;
+
+            if (messageFromRepo.SenderDeleted && messageFromRepo.RecipientDeleted)
+                datingRepository.Delete(messageFromRepo);
+
+            if (await datingRepository.SaveAll())
+                return NoContent();
+
+            throw new Exception("Error deleting message");
         }
         
     }
