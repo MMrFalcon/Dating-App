@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Message } from 'src/app/models/message';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -48,7 +48,7 @@ export class MemberMessagesComponent implements OnInit {
     this.newMessage.recipientId = this.recipientId;
     this.userService.sendMessage(this.authService.decodedToken.nameid, this.newMessage).subscribe((message: Message) => {
       this.messages.unshift(message);
-      this.newMessage = '';
+      this.newMessage.content = '';
     }, errorResponse => {
       this.alertifyService.error(errorResponse);
     });

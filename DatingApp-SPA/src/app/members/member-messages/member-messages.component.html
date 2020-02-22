@@ -48,7 +48,7 @@
   </div>
 
   <div class="card-footer">
-    <form #messageForm="ngForm" (ngSubmit)="messageForm.valid && sendMessage()">
+    <form #messageForm="ngForm" (ngSubmit)="messageForm.valid && sendMessage()" >
       <div class="input-group">
         <input type="text"
         [(ngModel)]="newMessage.content"
