@@ -47,16 +47,14 @@ namespace DatingApp.API.Data
 
         public async Task<User> GetUser(int id)
         {
-            var user = await dataContext.Users.Include(user => user.Photos)
-                .FirstOrDefaultAsync(user => user.Id == id);
+            var user = await dataContext.Users.FirstOrDefaultAsync(user => user.Id == id);
 
             return user;
         }
 
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            var users = dataContext.Users.Include(user => user.Photos)
-            .OrderByDescending(user => user.LastActive).AsQueryable();
+            var users = dataContext.Users.OrderByDescending(user => user.LastActive).AsQueryable();
             
             users = users.Where(user =>  user.Id != userParams.UserId);
             users = users.Where(user => user.Gender == userParams.Gender);
@@ -101,8 +99,7 @@ namespace DatingApp.API.Data
 
         private async Task<IEnumerable<int>> GetUserLikes(int currentUserId, bool likers)
         {
-            var user = await dataContext.Users.Include(x => x.Likers).Include(x => x.Likees)
-                    .FirstOrDefaultAsync(user => user.Id == currentUserId);
+            var user = await dataContext.Users.FirstOrDefaultAsync(user => user.Id == currentUserId);
 
             if (likers)
             {
@@ -155,8 +152,7 @@ namespace DatingApp.API.Data
 
         public async Task<IEnumerable<Message>> GetMessagesThread(int userId, int recipientId)
         {
-            var messages = await dataContext.Messages.Include(user => user.Sender).ThenInclude(userP => userP.Photos)
-                .Include(user => user.Recipient).ThenInclude(userP => userP.Photos)
+            var messages = await dataContext.Messages
                 .Where(message => message.RecipientId == userId && message.SenderId == recipientId && message.RecipientDeleted == false
                         || message.RecipientId == recipientId && message.SenderId == userId && message.SenderDeleted == false)
                 .OrderByDescending(messages => messages.MessageSent)
